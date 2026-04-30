@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/User/.claude/projects/c--Users-User-Desktop-edunest/memory/**)",
+      "Bash(npx tsc *)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\User\\.claude\\projects\\c--Users-User-Desktop-edunest\\memory"
+    ]
+  }
+}

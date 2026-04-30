@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base layer ───────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --navy: 12 35 64;
+    --gold: 200 151 42;
+    --cream: 251 248 243;
+    --charcoal: 28 43 58;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply font-sans antialiased text-charcoal bg-white;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  }
+
+  /* Headings always use the display/serif font */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+  }
+
+  /* Text selection uses brand gold */
+  ::selection {
+    background-color: rgb(var(--gold) / 0.25);
+    color: inherit;
+  }
+
+  /* Keyboard focus ring */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold-500 ring-offset-2;
+  }
+}
+
+/* ─── Component layer ──────────────────────────────────────────── */
+@layer components {
+  /* Responsive vertical section spacing */
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  /* Max-width container with horizontal padding */
+  .container-padded {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Display headline – hero / page titles */
+  .heading-display {
+    @apply font-display font-bold leading-[1.1] tracking-tight
+           text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  /* Section heading – used in content sections */
+  .heading-section {
+    @apply font-display font-bold leading-tight tracking-tight
+           text-3xl md:text-4xl;
+  }
+
+  /* Gold gradient text utility */
+  .text-gradient-gold {
+    @apply bg-gold-gradient bg-clip-text text-transparent;
+  }
+
+  /* Standard white card */
+  .card-base {
+    @apply bg-white rounded-2xl shadow-card
+           hover:shadow-card-hover transition-all duration-300;
+  }
+
+  /* Subtle label above a heading */
+  .eyebrow {
+    @apply text-gold-500 font-semibold uppercase tracking-widest text-xs md:text-sm;
+  }
+}
+
+/* ─── Utility layer ────────────────────────────────────────────── */
+@layer utilities {
+  /* Hide scrollbar but keep scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Full-bleed within a centred container */
+  .full-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+
+  /*
+    Top offset for pages that don't have a full-bleed hero behind the header.
+    Top bar = 40px, nav = 64px mobile / 80px desktop.
+    Usage: <main className="page-top-offset"> on non-hero pages.
+  */
+  .page-top-offset {
+    padding-top: calc(40px + 64px);
+  }
+  @media (min-width: 768px) {
+    .page-top-offset {
+      padding-top: calc(40px + 80px);
+    }
+  }
+}
