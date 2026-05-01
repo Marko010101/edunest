@@ -197,7 +197,7 @@ export default function AboutPage() {
                 {(
                   [
                     { value: "500+", label: "Students Supported", sub: "and growing" },
-                    { value: "15+", label: "Partner Universities", sub: "all NMC recognised" },
+                    { value: "10+", label: "Partner Universities", sub: "all NMC recognised" },
                     { value: "6+", label: "Years in Georgia", sub: "on-the-ground presence" },
                     { value: "98%", label: "Visa Success Rate", sub: "industry-leading" },
                   ] as const

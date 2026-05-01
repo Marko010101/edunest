@@ -1,59 +1,60 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Menu, X, GraduationCap, MessageCircle, Mail } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Button } from '@/components/shared/Button'
-import { EnquireButton } from '@/components/shared/EnquireButton'
-import { cn } from '@/lib/utils'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Menu, X, MessageCircle, Mail } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/shared/Button";
+import { EnquireButton } from "@/components/shared/EnquireButton";
+import { cn } from "@/lib/utils";
 
 // ─── Config — update these when contact details change ───────────────────────
-const WA_DISPLAY = '+91 98765 43210'
-const WA_LINK = 'https://wa.me/919876543210?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20studying%20in%20Georgia.'
-const EMAIL_DISPLAY = 'info@edunest.in'
-const EMAIL_LINK = 'mailto:info@edunest.in'
+const WA_DISPLAY = "+91 98765 43210";
+const WA_LINK =
+  "https://wa.me/919876543210?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20studying%20in%20Georgia.";
+const EMAIL_DISPLAY = "info@edunest.in";
+const EMAIL_LINK = "mailto:info@edunest.in";
 
 const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About Us' },
-  { href: '/universities', label: 'Universities' },
-  { href: '/contact', label: 'Contact' },
-] as const
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
+  { href: "/universities", label: "Universities" },
+  { href: "/contact", label: "Contact" },
+] as const;
 
 // Top-bar height in px — keep in sync with the h-10 class below
-const TOP_BAR_H = 40
+const TOP_BAR_H = 40;
 
 export function Header() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const pathname = usePathname()
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Close drawer on navigation
-  useEffect(() => setMenuOpen(false), [pathname])
+  useEffect(() => setMenuOpen(false), [pathname]);
 
   // Lock body scroll while drawer is open
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
-  const lightNav = !scrolled
+  const lightNav = !scrolled;
 
   return (
     <>
       {/* ── WhatsApp announcement bar ─────────────────────────────────────── */}
-      <div
-        className="fixed inset-x-0 top-0 z-50 h-10 bg-navy flex items-center"
-        aria-label="Contact information"
-      >
+      <div className="fixed inset-x-0 top-0 z-50 h-10 bg-navy flex items-center" aria-label="Contact information">
         <div className="container-padded w-full flex items-center justify-center sm:justify-between gap-6">
           {/* Email us */}
           <a
@@ -90,77 +91,38 @@ export function Header() {
       */}
       <header
         className={cn(
-          'fixed inset-x-0 z-40 transition-all duration-300',
+          "fixed inset-x-0 z-40 transition-all duration-300",
           `top-[${TOP_BAR_H}px]`,
-          scrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100'
-            : 'bg-transparent',
+          scrolled ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100" : "bg-transparent",
         )}
-        style={{ top: TOP_BAR_H }}   // inline fallback for the dynamic class
+        style={{ top: TOP_BAR_H }} // inline fallback for the dynamic class
       >
-        <nav
-          className="container-padded flex items-center justify-between h-16 md:h-20"
-          aria-label="Main navigation"
-        >
+        <nav className="container-padded flex items-center justify-between h-16 md:h-20" aria-label="Main navigation">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group" aria-label="Edunest home">
-            <div className="w-9 h-9 bg-gold rounded-lg flex items-center justify-center shadow-md shadow-gold/30 transition-transform duration-200 group-hover:scale-105">
-              <GraduationCap className="w-5 h-5 text-white" aria-hidden="true" />
-            </div>
-            <span
-              className={cn(
-                'font-display font-bold text-xl transition-colors duration-300',
-                lightNav ? 'text-white' : 'text-navy',
-              )}
-            >
-              Edunest
-            </span>
+          <Link href="/" className="flex items-center group" aria-label="Edunest home">
+            <Image
+              src="/logo.webp"
+              alt="Edunest"
+              width={140}
+              height={40}
+              className="h-9 w-auto object-contain transition-opacity duration-200 group-hover:opacity-80"
+              priority
+            />
           </Link>
 
-          {/* Desktop nav links — hidden on mobile */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-            {NAV_LINKS.map(({ href, label }) => {
-              const active = pathname === href
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  aria-current={active ? 'page' : undefined}
-                  className={cn(
-                    'relative px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200',
-                    lightNav
-                      ? active ? 'text-white' : 'text-white/70 hover:text-white'
-                      : active ? 'text-navy' : 'text-charcoal hover:text-navy',
-                  )}
-                >
-                  {label}
-                  {active && (
-                    <motion.span
-                      layoutId="nav-indicator"
-                      className="absolute inset-x-2 bottom-0.5 h-0.5 rounded-full bg-gold"
-                    />
-                  )}
-                </Link>
-              )
-            })}
-          </nav>
-
-          {/* Right side — Enquire Now + hamburger (hamburger hidden on md+) */}
+          {/* Right side — Enquire Now + hamburger */}
           <div className="flex items-center gap-2">
-            <EnquireButton
-              variant={lightNav ? 'ghost' : 'primary'}
-              size="sm"
-            />
+            <EnquireButton variant={lightNav ? "ghost" : "primary"} size="sm" />
 
             <button
               onClick={() => setMenuOpen((v) => !v)}
               className={cn(
-                'md:hidden p-2.5 rounded-xl border transition-all duration-200',
+                "p-2.5 rounded-xl border transition-all duration-200",
                 lightNav
-                  ? 'text-white border-white/20 hover:bg-white/10'
-                  : 'text-navy border-navy-100 hover:bg-navy-50',
+                  ? "text-white border-white/20 hover:bg-white/10"
+                  : "text-navy border-navy-100 hover:bg-navy-50",
               )}
-              aria-label={menuOpen ? 'Close menu' : 'Open navigation menu'}
+              aria-label={menuOpen ? "Close menu" : "Open navigation menu"}
               aria-expanded={menuOpen}
               aria-controls="nav-drawer"
             >
@@ -193,24 +155,21 @@ export function Header() {
               role="dialog"
               aria-modal="true"
               aria-label="Navigation menu"
-              initial={{ x: '100%' }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 26, stiffness: 240 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 26, stiffness: 240 }}
               className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-sm bg-navy flex flex-col shadow-2xl"
             >
               {/* Drawer header */}
               <div className="flex items-center justify-between px-6 h-20 border-b border-navy-700 flex-shrink-0">
                 <Link
                   href="/"
-                  className="flex items-center gap-2.5"
+                  className="flex items-center"
                   aria-label="Go to homepage"
                   onClick={() => setMenuOpen(false)}
                 >
-                  <div className="w-8 h-8 bg-gold rounded-lg flex items-center justify-center">
-                    <GraduationCap className="w-4 h-4 text-white" aria-hidden="true" />
-                  </div>
-                  <span className="font-display font-bold text-lg text-white">Edunest</span>
+                  <Image src="/logo.webp" alt="Edunest" width={120} height={36} className="h-8 w-auto object-contain" />
                 </Link>
 
                 <button
@@ -223,41 +182,33 @@ export function Header() {
               </div>
 
               {/* Nav links */}
-              <nav
-                className="flex-1 overflow-y-auto px-4 py-6"
-                aria-label="Site pages"
-              >
+              <nav className="flex-1 overflow-y-auto px-4 py-6" aria-label="Site pages">
                 <ul className="flex flex-col gap-1" role="list">
                   {NAV_LINKS.map(({ href, label }, i) => {
-                    const active = pathname === href
+                    const active = pathname === href;
                     return (
                       <motion.li
                         key={href}
                         initial={{ opacity: 0, x: 24 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.04 + i * 0.06, duration: 0.28, ease: 'easeOut' }}
+                        transition={{ delay: 0.04 + i * 0.06, duration: 0.28, ease: "easeOut" }}
                       >
                         <Link
                           href={href}
                           onClick={() => setMenuOpen(false)}
-                          aria-current={active ? 'page' : undefined}
+                          aria-current={active ? "page" : undefined}
                           className={cn(
-                            'flex items-center justify-between px-4 py-4 rounded-xl text-base font-medium transition-colors',
+                            "flex items-center justify-between px-4 py-4 rounded-xl text-base font-medium transition-colors",
                             active
-                              ? 'text-white bg-navy-800 font-semibold'
-                              : 'text-navy-100 hover:text-white hover:bg-navy-800',
+                              ? "text-white bg-navy-800 font-semibold"
+                              : "text-navy-100 hover:text-white hover:bg-navy-800",
                           )}
                         >
                           {label}
-                          {active && (
-                            <span
-                              className="w-2 h-2 rounded-full bg-gold flex-shrink-0"
-                              aria-hidden="true"
-                            />
-                          )}
+                          {active && <span className="w-2 h-2 rounded-full bg-gold flex-shrink-0" aria-hidden="true" />}
                         </Link>
                       </motion.li>
-                    )
+                    );
                   })}
                 </ul>
               </nav>
@@ -288,5 +239,5 @@ export function Header() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }

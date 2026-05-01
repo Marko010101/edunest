@@ -1,70 +1,58 @@
-import {
-  Award,
-  DollarSign,
-  Globe,
-  GraduationCap,
-  ShieldCheck,
-  Users,
-} from 'lucide-react'
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/shared/AnimatedSection'
+import { Award, DollarSign, Globe, GraduationCap, ShieldCheck, Users } from "lucide-react";
+import { AnimatedSection, StaggerContainer, StaggerItem } from "@/components/shared/AnimatedSection";
 
 const REASONS = [
   {
     Icon: Award,
-    title: 'WHO & NMC Recognised',
+    title: "WHO & NMC Recognised",
     description:
-      'Georgian medical universities are approved by WHO and India\'s National Medical Commission, ensuring your degree is valid for practice back home.',
+      "Georgian medical universities are approved by WHO and India's National Medical Commission, ensuring your degree is valid for practice back home.",
   },
   {
     Icon: DollarSign,
-    title: 'Highly Affordable',
+    title: "Highly Affordable",
     description:
-      'Annual tuition: $3,000–$8,000 USD. Monthly living costs: under $500. A fraction of private Indian medical colleges—without compromising quality.',
+      "Monthly living costs: under $500. A fraction of private Indian medical colleges—without compromising quality.",
   },
   {
     Icon: Globe,
-    title: 'English-Medium Programs',
+    title: "English-Medium Programs",
     description:
-      'All professional programs at our partner universities are taught in English—zero language barrier for Indian students.',
+      "All professional programs at our partner universities are taught in English—zero language barrier for Indian students.",
   },
   {
     Icon: GraduationCap,
-    title: 'High FMGE / NExT Pass Rate',
+    title: "High FMGE / NExT Pass Rate",
     description:
-      'Students from our partner universities consistently outperform the national FMGE average, thanks to rigorous clinical training.',
+      "Students from our partner universities consistently outperform the national FMGE average, thanks to rigorous clinical training.",
   },
   {
     Icon: ShieldCheck,
-    title: 'Safe & Welcoming Country',
+    title: "Safe & Welcoming Country",
     description:
-      'Georgia ranks among the safest countries in Europe with warm hospitality and a rapidly growing community of Indian students.',
+      "Georgia ranks among the safest countries in Europe with warm hospitality and a rapidly growing community of Indian students.",
   },
   {
     Icon: Users,
-    title: 'Thriving Indian Community',
+    title: "Thriving Indian Community",
     description:
-      'Thousands of Indian students already study in Tbilisi. Cultural events, Indian restaurants, and a strong support network await you.',
+      "Thousands of Indian students already study in Tbilisi. Cultural events, Indian restaurants, and a strong support network await you.",
   },
-] as const
+] as const;
 
 export function WhyGeorgia() {
   return (
     <section className="section-padding bg-cream" aria-labelledby="why-georgia-heading">
       <div className="container-padded">
-
         {/* Section header */}
         <AnimatedSection className="text-center mb-14">
           <p className="eyebrow mb-3">Why Choose Georgia?</p>
-          <h2
-            id="why-georgia-heading"
-            className="heading-section text-navy mb-4"
-          >
+          <h2 id="why-georgia-heading" className="heading-section text-navy mb-4">
             The Smart Choice for Indian Students
           </h2>
           <p className="text-muted max-w-2xl mx-auto leading-relaxed">
-            Georgia offers a rare combination of globally recognised degrees,
-            genuinely affordable education, and a quality of life that makes
-            studying abroad feel like home.
+            Georgia offers a rare combination of globally recognised degrees, genuinely affordable education, and a
+            quality of life that makes studying abroad feel like home.
           </p>
         </AnimatedSection>
 
@@ -79,16 +67,13 @@ export function WhyGeorgia() {
                     aria-hidden="true"
                   />
                 </div>
-                <h3 className="font-display font-semibold text-lg text-navy mb-2">
-                  {title}
-                </h3>
+                <h3 className="font-display font-semibold text-lg text-navy mb-2">{title}</h3>
                 <p className="text-muted text-sm leading-relaxed">{description}</p>
               </article>
             </StaggerItem>
           ))}
         </StaggerContainer>
-
       </div>
     </section>
-  )
+  );
 }

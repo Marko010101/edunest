@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, CheckCircle, Send, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -20,6 +21,7 @@ export function EnquireModal({ isOpen, onClose }: EnquireModalProps) {
   const [form, setForm] = useState({ name: '', email: '', phone: '', state: '', city: '' })
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const cities = form.state ? (INDIA_STATES_CITIES[form.state] ?? []) : []
 
@@ -58,13 +60,28 @@ export function EnquireModal({ isOpen, onClose }: EnquireModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
-    // TODO: replace with POST to /api/contact
-    await new Promise(r => setTimeout(r, 1000))
-    setSubmitting(false)
-    setSubmitted(true)
+    setSubmitError(null)
+    try {
+      const res = await fetch('/api/enquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error((data as { error?: string }).error ?? 'Submission failed.')
+      }
+      setSubmitted(true)
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
-  return (
+  if (typeof document === 'undefined') return null
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -247,6 +264,13 @@ export function EnquireModal({ isOpen, onClose }: EnquireModalProps) {
                       </div>
                     </div>
 
+                    {/* Error message */}
+                    {submitError && (
+                      <p role="alert" className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+                        {submitError}
+                      </p>
+                    )}
+
                     {/* Submit */}
                     <button
                       type="submit"
@@ -270,6 +294,7 @@ export function EnquireModal({ isOpen, onClose }: EnquireModalProps) {
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   )
 }

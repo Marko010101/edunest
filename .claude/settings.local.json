@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Read(//c/Users/User/.claude/projects/c--Users-User-Desktop-edunest/memory/**)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(npm install *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\User\\.claude\\projects\\c--Users-User-Desktop-edunest\\memory"

@@ -2,6 +2,7 @@ export interface University {
   id: string
   slug: string
   name: string
+  abbrev: string
   location: string
   established: number
   programs: string[]
